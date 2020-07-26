@@ -1,0 +1,54 @@
+<html>
+    <head>
+      <script src="./node_modules/node.date-time/index.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        </head>
+       
+<body style="direction: rtl;text-align: center;margin: 100px;margin-top: 10px;">
+ <p> <h1 style="color: #ff63a3;"> שעות נוכחות עובדים </h1>
+<input type="text" style="color: #ff63a3; font-size:25px;" id="tz" placeholder="הכנס תז"/>
+<input type="text" style="color: #ff63a3; font-size:25px;"id="day" placeholder="הכנס יום"/>
+<input type="time"style="color: #ff63a3; font-size:25px;" id="Beginningtime" placeholder="הכנס שעת התחלה"/>
+<input type="time" style="color: #ff63a3; font-size:25px;"  id="Endtime" placeholder="הכנס שעת סיום"/>
+<input type="date"style="color: #ff63a3; font-size:25px;" id="date" placeholder="הכנס תאריך"/>
+<input type="button" style="background-color: #ff63a3; font-size:25px;" onclick="addDay()" value="add Day ">
+</p>
+<p> 
+<input type="button"  style="background-color: #ff63a3;font-size:25px;" onclick="get()" value="קבלת פרטי נוכחות עובד עפ תז"/>
+<input type="text" style="color: #ff63a3; font-size:25px;" placeholder="insert tz" id="a"/>
+<div id="all"></div>
+</p>
+</body>
+<script type="text/javascript">
+
+function addDay(){
+var id=$('#tz').val();
+var day=$('#day').val();
+var Beginningtime=$('#Beginningtime').val();
+var Endtime=$('#Endtime').val();
+var date=$('#date').val();
+ 
+$.post("http://localhost:3000/editorialboard/addDay",
+  {
+    id: id,
+    day: day,
+    Beginningtime:Beginningtime,
+    Endtime:Endtime,
+    date:date,
+   
+  },
+  function(data, status){
+    alert("Data: " + data + "\nStatus: " + status);
+  });
+
+}
+function get(){
+  var e=document.getElementById('a').value;
+$.get("http://localhost:3000/editorialboard/get/e="+e, function(data, status){
+  document.getElementById('all').innerHTML=JSON.stringify(data);
+  });
+}
+ 
+    </script>
+</html>

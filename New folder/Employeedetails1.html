@@ -1,0 +1,116 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        </head>
+<body style="direction: rtl;text-align: center;margin: 100px;margin-top: 10px;">
+  <h1 style="color:coral">  עובדים  </h1>
+  <h3 style="color: #ff63a3;">  הכנס פרטי עובד  </h3> 
+  <p>
+<input type="text" style="color: #ff63a3; font-size:15px;" id="tz" placeholder="הכנס תז"/>
+<input type="text"  style="color: #ff63a3; font-size:15px;"id="firstName" placeholder="הכנס שם"/>
+<input type="text" style="color: #ff63a3; font-size:15px;" id="lastName" placeholder="הכנס משפחה"/>
+<input type="text"  style="color: #ff63a3; font-size:15px;"id="adress" placeholder="הכנס כתובת"/>
+<input type="text" style="color: #ff63a3; font-size:15px;" id="tel" placeholder="הכנס טלפון"/>
+<input type="text" style="color: #ff63a3; font-size:15px;" id="mail" placeholder="הכנס מייל"/>
+<input type="button"  style="background-color: #ff63a3; font-size:19px;" onclick="addEmployee()" value="add employee ">
+</p>
+<p>
+  <h3 style="color: #ff63a3;">  הכנס  תעודת זהות של עובד  </h3> 
+<input type="text" placeholder="insert tz" id="one" >
+<input type="button"   style="background-color: #ff63a3; font-size:19px;" onclick="Employeedetails()" value="Employee details ">
+<div id="one1"></div>
+</p>
+<p>
+  <h3 style="color: #ff63a3;">  הכנס  תעודת זהות של עובד  </h3> 
+<input type="text" placeholder="insert tz" id="dele" >
+<input type="button"  style="background-color: #ff63a3; font-size:19px;" onclick="DeleteEmployee()" value="Delete employee ">
+<div id="delet1"></div>
+</p>
+<p>
+  <h3 style="color: #ff63a3;">    הכנס פרטי עובד לפי ת"ז לעדכון  </h3> 
+
+<input type="text" placeholder="insert tz" id="up" >
+ <input type="text" id="firstName1" placeholder="הכנס שם"/>
+<input type="text" id="lastName1" placeholder="הכנס משפחה"/>
+<input type="text" id="adress1" placeholder="הכנס כתובת"/>
+<input type="text" id="tel1" placeholder="הכנס טלפון"/>
+<input type="text" id="mail1" placeholder="הכנס מייל"/>
+<input type="button" style="background-color: #ff63a3; font-size:19px;" onclick="updatingEmployee()" value="updating employee ">
+</p>
+<p>
+  <h3 style="color: #ff63a3;">    לקבלת כל העובדים  </h3> 
+<input type="button"  style="background-color: #ff63a3; font-size:19px;" onclick="AllEmployees()" value="All employees ">
+<div id="all"></div>
+</p>
+
+</body>
+<script type="text/javascript">
+
+function addEmployee(){
+var id=$('#tz').val();
+var firstName=$('#firstName').val();
+var lastName=$('#lastName').val();
+var adress=$('#adress').val();
+var tel=$('#tel').val();
+var mail=$('#mail').val();
+$.post("http://localhost:3000/Employeedetails/addEmployee",
+  {
+    id: id,
+    firstName: firstName,
+    lastName:lastName,
+    adress:adress,
+    tel:tel,
+    mail:mail,
+    isactive:true,
+  },
+  function(data, status){
+    alert("Data: " + data + "\nStatus: " + status);
+  });
+
+}
+function Employeedetails(){
+  var e =document.getElementById('one').value;
+$.get("http://localhost:3000/Employeedetails/Employeedetails/e="+e, function(data, status){
+  document.getElementById('one1').innerHTML=JSON.stringify(data);
+});
+} 
+
+function DeleteEmployee(){
+  var e =document.getElementById('dele').value;
+$.get("http://localhost:3000/Employeedetails/DeleteEmployee/e="+e, function(data, status){
+
+});
+}
+function updatingEmployee(){
+var e =document.getElementById('up').value;
+var firstName=$('#firstName1').val();
+var lastName=$('#lastName1').val();
+var adress=$('#adress1').val();
+var tel=$('#tel1').val();
+var mail=$('#mail1').val();
+$.post("http://localhost:3000/Employeedetails/updatingEmployee/e="+e,
+  {
+     
+    firstName: firstName,
+    lastName:lastName,
+    adress:adress,
+    tel:tel,
+    mail:mail,
+    
+  },
+  function(data, status){
+    alert("Data: " + data + "\nStatus: " + status);
+  });
+
+}
+
+function AllEmployees(){
+$.get("http://localhost:3000/Employeedetails/AllEmployees", function(data, status){
+  document.getElementById('all').innerHTML=JSON.stringify(data);
+  });
+}
+ 
+    </script>
+</html>
+
